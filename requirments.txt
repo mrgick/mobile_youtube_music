@@ -1,0 +1,5 @@
+https://github.com/kivymd/KivyMD/archive/master.zip # for working android, more on link - https://github.com/kivymd/KivyMD#how-to-fix-a-shader-bug-on-an-android-device
+ytmusicapi==1.3.2
+yt-dlp==2023.11.16
+
+

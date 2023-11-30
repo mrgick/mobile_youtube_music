@@ -1,0 +1,43 @@
+<SearchScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            title: "YT music"
+            icon: "git"
+            left_action_items: [["menu", lambda x: x]]
+
+        MDBoxLayout:
+            orientation: "vertical"
+            padding: "20sp"
+            spacing: "10sp"
+
+            MDTextField:
+                id: search_text
+                hint_text: "Enter song name"
+                text: ""
+
+            MDFillRoundFlatIconButton:
+                icon: "magnify"
+                text: "SEARCH"
+                disabled: search_text.text == ""
+                on_release: root.search_music(search_text.text)
+
+            MDSeparator:
+                orientation:'horizontal'
+                height: "2sp"
+
+            MDScrollView:
+                MDList:
+                    id: videos_list
+
+<SongDialog>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "120dp"
+
+    MDTextField:
+        hint_text: "City"
+
+    MDTextField:
+        hint_text: "Street"
