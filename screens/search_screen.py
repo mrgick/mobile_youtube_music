@@ -10,16 +10,16 @@ from kivymd.uix.list import (
 )
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.boxlayout import BoxLayout
-from playlists_screen import get_playlists
+from kivymd.uix.boxlayout import MDBoxLayout
+from .playlists_screen import get_playlists
 from kivymd.uix.list import MDList, OneLineListItem
 from pathlib import Path
-from yt_api import search_music, download_music, add_metadata
+from utils.yt_api import search_music, download_music, add_metadata
 from kivymd.uix.spinner import MDSpinner
 from kivymd.uix.label import MDLabel
 from kivy.clock import Clock
 
-class SongDialog(BoxLayout):
+class SongDialog(MDBoxLayout):
     def __init__(self, song, **kwargs):
         super().__init__(**kwargs)
         self.song = song
@@ -40,13 +40,13 @@ class SongDialog(BoxLayout):
 
     def show_spinner(self, dt):
         self.clear_widgets()
-        spinner = MDSpinner(size_hint=(None, None), size=(48, 48))
+        spinner = MDSpinner(size_hint=(None, None), size=(48, 48), pos_hint={'center_x': .5, 'center_y': .5})
         self.add_widget(spinner)
         if self.download_text:
-            self.add_widget(MDLabel(text=self.download_text))
+            self.add_widget(MDLabel(text=self.download_text, pos_hint={'center_x': .5, 'center_y': .5}))
         if self.download_complete:
             self.clear_widgets()
-            self.add_widget(MDLabel(text="Download complete"))
+            self.add_widget(MDLabel(text="Download complete", pos_hint={'center_x': .5, 'center_y': .5}))
 
     def download_music_thread(self, dir_path):
         download_music(self.song, dir_path, lambda x: self.update_status(x))
@@ -55,7 +55,8 @@ class SongDialog(BoxLayout):
         self.download_complete = True
 
     def update_status(self, x):
-        self.download_text = f"Downloading: {x['speed']/1048576:.2f}Mb, {x['_percent_str'].split('m')[1].split('%')[0]}%"
+        if x and x.get('speed') and x.get('_percent_str'):
+            self.download_text = f"Downloading: {x['speed']/1048576:.2f}Mb, {x['_percent_str'].split('m')[1].split('%')[0]}%"
 
 class SearchScreen(MDScreen):
     def search_music(self, search_text: str):

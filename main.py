@@ -1,32 +1,19 @@
-from kivymd.app import MDApp
-from kivymd.uix.screenmanager import ScreenManager
-from kivymd.uix.screen import MDScreen
-from kivymd.uix.textfield import MDTextField
-from kivymd.uix.list import (
-    ThreeLineAvatarIconListItem,
-    MDList,
-    ImageLeftWidgetWithoutTouch,
-)
 from kivy.lang import Builder
-from ytmusicapi import YTMusic
-from kivymd.uix.button import MDFlatButton
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.boxlayout import BoxLayout
-from search_screen import SearchScreen
-from playlists_screen import PlaylistsScreen
-from player_screen import PlayerScreen
+from kivy.uix.screenmanager import NoTransition, ScreenManager
+from kivymd.app import MDApp
 
-from kivy.uix.screenmanager import ScreenManager, NoTransition
-
-
-
-
-
+from screens.player_screen import PlayerScreen
+from screens.playlists_screen import PlaylistsScreen
+from screens.search_screen import SearchScreen
+from pathlib import Path
 
 class YoutubeMusicApp(MDApp):
     dialog = None
+
     def build(self):
-        Builder.load_file("main.kv")
+        screens = Path('screens')
+        Builder.load_file(str(screens / "main.kv"))
+        Builder.load_file(str(screens / "playlists_screen.kv"))
         self.theme_cls.primary_palette = "Blue"
         self.theme_cls.theme_style = "Light"
         sm = ScreenManager(transition=NoTransition())
@@ -36,7 +23,7 @@ class YoutubeMusicApp(MDApp):
         self.sm = sm
         return sm
 
-    def switch_screen(self, screen_name:str):
+    def switch_screen(self, screen_name: str):
         self.sm.current = screen_name
 
 

@@ -17,4 +17,5 @@ ignore = [
     "C901",  # too complex
     "F403",  # star import
     "F405",  # star import
+    "B023",  # lambda params
 ]

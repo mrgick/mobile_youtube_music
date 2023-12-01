@@ -1,0 +1,48 @@
+<DeletePlaylistDialog>
+    orientation: "vertical"
+    spacing:"20sp"
+    size_hint_y: None
+    height: "100sp"
+    MDLabel:
+        id: text
+        text: ""
+        pos_hint: {'center_x': .5, 'center_y': .5}
+
+
+<CreatePlaylistDialog>
+    orientation: "vertical"
+    spacing:"20sp"
+    size_hint_y: None
+    height: "120sp"
+    MDTextField:
+        id: name
+        hint_text: "Enter name"
+        text: ""
+
+    MDFillRoundFlatIconButton:
+        id: btn
+        icon: "plus"
+        text: "Create"
+        disabled: name.text == ""
+        on_release: root.create_playlist(name.text)
+
+
+
+<PlaylistsScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        MDTopAppBar
+        MDBoxLayout:
+            orientation: "vertical"
+            padding: "20sp"
+            spacing: "10sp"
+            MDFillRoundFlatIconButton:
+                icon: "plus"
+                text: "CREATE NEW"
+                on_release: root.add_playlist()
+            MDSeparator:
+                orientation:'horizontal'
+                height: "2sp"
+            MDScrollView:
+                MDList:
+                    id: playlist_list
