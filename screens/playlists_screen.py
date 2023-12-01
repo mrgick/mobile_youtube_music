@@ -7,15 +7,14 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.textfield import MDTextField
 from pathlib import Path
 
-MUSIC_DIR = Path("music")
-
-
 def get_playlists() -> list[Path]:
-    return [x for x in MUSIC_DIR.iterdir() if x.is_dir()]
+    app = MDApp.get_running_app()
+    return [x for x in app.music_path.iterdir() if x.is_dir()]
 
 class CreatePlaylistDialog(MDBoxLayout):
     def create_playlist(self, playlist_name: str):
-        new_dir: Path = MUSIC_DIR / playlist_name
+        app = MDApp.get_running_app()
+        new_dir: Path = app.music_path / playlist_name
         new_dir.mkdir(exist_ok=True)
         tf: MDTextField = self.ids.name
         tf.text = f'Created playlist "{playlist_name}"'

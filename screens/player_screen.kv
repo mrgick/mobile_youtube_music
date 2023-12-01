@@ -1,0 +1,57 @@
+<ChoosePlaylistDialog>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "120dp"
+
+    MDScrollView:
+        MDList:
+            id: playlists_list
+
+<PlayerScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        MDTopAppBar
+        MDBoxLayout:
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            orientation: "vertical"
+            padding: "20sp"
+            spacing: "20sp"
+
+            MDFlatButton:
+                halign: "center"
+                text: "Choose Playlist"
+                id: playlist
+                pos_hint: {"center_x": .5, "center_y": .5}
+                on_release: root.choose_playlist_dialog()
+            MDSeparator:
+                orientation:'horizontal'
+                height: "2sp"
+
+            Image:
+                pos_hint: {"center_x": .5, "center_y": .5}
+                source: ''
+                size: self.texture_size
+                id: art
+            
+            MDGridLayout:
+                cols: 3
+                adaptive_size: True
+                pos_hint: {"center_x": .5, "center_y": .5}
+
+                MDIconButton:
+                    icon: 'skip-previous'
+                    icon_size: "64sp"
+                MDIconButton:
+                    icon: 'play-pause'
+                    icon_size: "64sp"
+                    on_release: root.play_pause_music()
+                MDIconButton:
+                    icon: 'skip-next'
+                    icon_size: "64sp"
+            MDLabel:
+                id: track
+                text: "No track"
+                halign: "center"
+                
+

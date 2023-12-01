@@ -35,22 +35,3 @@
     MDScrollView:
         MDList:
             id: playlists_list
-
-
-
-<PlayerScreen>:
-    MDBoxLayout:
-        orientation: "vertical"
-        MDTopAppBar
-        MDBoxLayout:
-            orientation: "vertical"
-            padding: "20sp"
-            MDScrollView:
-                MDList:
-                    id: playlist_list
-
-<MDTopAppBar>:
-    title: "YT music"
-    icon: "git"
-    left_action_items: [["magnify", lambda x: app.switch_screen("search_screen")]]
-    right_action_items: [["menu", lambda x: app.switch_screen("playlists_screen")], ["music", lambda x: app.switch_screen("player_screen")]]
