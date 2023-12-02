@@ -1,5 +1,4 @@
 import threading
-from pathlib import Path
 
 from kivy.clock import Clock
 from kivymd.app import MDApp
@@ -28,18 +27,16 @@ class SongDialog(MDBoxLayout):
         mdlist: MDList = self.ids.playlists_list
         mdlist.clear_widgets()
         for x in get_playlists():
-            item = OneLineListItem(
-                text=str(x.name),
-                on_release=lambda y: self.download_file(x),  # noqa: B023
-            )
+            item = OneLineListItem(text=str(x.name), on_release=self.download_file)
+            item.path = x
             mdlist.add_widget(item)
 
-    def download_file(self, dir_path: Path):
+    def download_file(self, item):
         self.download_text = ""
         self.download_complete = False
         Clock.schedule_interval(self.show_spinner, 1)
         download_thread = threading.Thread(
-            target=self.download_music_thread, args=(dir_path,)
+            target=self.download_music_thread, args=(item.path,)
         )
         download_thread.start()
 

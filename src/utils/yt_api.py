@@ -1,9 +1,9 @@
 import io
 from pathlib import Path
 
-import eyed3
 import requests
 import yt_dlp
+from mutagen.id3 import APIC, ID3, TALB, TIT2, TPE1
 from ytmusicapi import YTMusic
 
 yt_searcher = YTMusic()
@@ -32,30 +32,38 @@ def download_music(song: dict, dir_path: Path, progress_hook):
 
 
 def add_metadata(song: dict, dir_path: Path):
-    audiofile = eyed3.load(dir_path / f"{song['title']}.mp3")
+    audiofile = ID3(dir_path / f"{song['title']}.mp3")
 
-    audiofile.tag.title = song["title"]
+    audiofile.add(TIT2(encoding=3, text=song["title"]))
+
     if song["artists"]:
-        audiofile.tag.artist = ", ".join(x["name"] for x in song["artists"])
+        audiofile.add(
+            TPE1(encoding=3, text=", ".join(x["name"] for x in song["artists"]))
+        )
+
     if song["album"]:
-        audiofile.tag.album = song["album"]["name"]
+        audiofile.add(TALB(encoding=3, text=song["album"]["name"]))
 
     response = requests.get(song["thumbnails"][-1]["url"]).content
-    audiofile.tag.images.set(3, response, "image/jpeg")
+    audiofile.add(APIC(3, mime="image/jpeg", type=3, desc="", data=response))
 
-    audiofile.tag.save()
+    audiofile.save(v2_version=3)
 
 
-def get_metadata(path: Path) -> dict:
-    audiofile = eyed3.load(path)
+def get_metadata(file_path: Path) -> dict:
+    audiofile = ID3(file_path)
     info = {
-        "title": audiofile.tag.title,
-        "artist": audiofile.tag.artist,
-        "album": audiofile.tag.album,
+        "title": audiofile.get("TIT2").text[0] if "TIT2" in audiofile else None,
+        "artist": audiofile.get("TPE1").text[0] if "TPE1" in audiofile else None,
+        "album": audiofile.get("TALB").text[0] if "TALB" in audiofile else None,
         "image": None,
     }
+
     if not info["title"]:
-        info["title"] = path.stem
-    if len(audiofile.tag.images) > 0:
-        info["image"] = io.BytesIO(audiofile.tag.images[0].image_data)
+        info["title"] = file_path.stem
+    print(audiofile)
+    if "APIC:" in audiofile:
+        image_data = audiofile.get("APIC:").data
+        info["image"] = io.BytesIO(image_data)
+
     return info
