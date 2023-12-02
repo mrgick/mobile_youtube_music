@@ -42,6 +42,7 @@
                 MDIconButton:
                     icon: 'skip-previous'
                     icon_size: "64sp"
+                    on_release: root.choose_music(root.current_music-1)
                 MDIconButton:
                     icon: 'play-pause'
                     icon_size: "64sp"
@@ -49,6 +50,7 @@
                 MDIconButton:
                     icon: 'skip-next'
                     icon_size: "64sp"
+                    on_release: root.choose_music(root.current_music+1)
             MDLabel:
                 id: track
                 text: "No track"

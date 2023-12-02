@@ -46,9 +46,14 @@ def add_metadata(song: dict, dir_path: Path):
 
 def get_metadata(path: Path) -> dict:
     audiofile = eyed3.load(path)
-    return {
+    info = {
         'title' : audiofile.tag.title,
         'artist' : audiofile.tag.artist,
         'album' : audiofile.tag.album,
-        'image' : io.BytesIO(audiofile.tag.images[0].image_data)
+        'image' : None
     }
+    if not info['title']:
+        info['title'] = path.stem
+    if len(audiofile.tag.images) > 0:
+        info['image'] = io.BytesIO(audiofile.tag.images[0].image_data)
+    return info

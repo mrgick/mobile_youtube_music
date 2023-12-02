@@ -6,9 +6,8 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.list import MDList, OneLineListItem
 from .playlists_screen import get_playlists
 from utils.yt_api import get_metadata
-from kivy.core.image import Image as CoreImage
 from kivy.graphics.texture import Texture
-from PIL import Image as PilImage
+from PIL import Image, ImageFilter
 from kivy.core.audio import SoundLoader
 
 
@@ -24,15 +23,9 @@ class ChoosePlaylistDialog(MDBoxLayout):
 
     def choosed_playlist(self, item):
         path = item.path
-        print(path)
         self.screen.current_playlist = [
             x for x in path.iterdir() if x.is_file() and x.suffix == ".mp3"
         ]
-        print(self.screen.current_playlist)
-        if len(self.screen.current_playlist) >= 1:
-            self.screen.current_music = 0
-        else:
-            self.screen.current_music = None
         self.screen.refresh(path.name)
         app = MDApp.get_running_app()
         app.dialog.dismiss()
@@ -44,30 +37,61 @@ class PlayerScreen(MDScreen):
         self.current_playlist = None
         self.current_music = None
         self.sound = None
+        self.play_next = False
 
-    def refresh(self, name):
-        self.ids.playlist.text = name
-        if self.current_music is not None:
-            file = self.current_playlist[self.current_music]
-            data = get_metadata(file)
-            self.ids.track.text = (
-                f'{data["title"]} by {data["artist"]} from {data["album"]}'
+    def choose_music(self, number: int = 0):
+        if not self.current_playlist or len(self.current_playlist) == 0:
+            return None
+        if number < 0:
+            self.current_music = len(self.current_playlist) - 1
+        elif number > len(self.current_playlist) - 1:
+            self.current_music = 0
+        else:
+            self.current_music = number
+        if self.sound:
+            self.sound.stop()
+            self.sound.unload()
+        file = self.current_playlist[self.current_music]
+        data = get_metadata(file)
+        track = data["title"]
+        if data["artist"]:
+            track += f' by {data["artist"]}'
+        if data["album"]:
+            track += f' from {data["album"]}'
+        self.ids.track.text = track
+        kivy_texture = None
+        if data["image"]:
+            pil_image = Image.open(data["image"])
+            pil_image = (
+                pil_image.resize((360, 360))
+                .filter(ImageFilter.BoxBlur(radius=1))
+                .rotate(180)
             )
-            pil_image = PilImage.open(data["image"])
             kivy_texture = Texture.create(
                 size=(pil_image.width, pil_image.height), colorfmt="rgba"
             )
             kivy_texture.blit_buffer(
                 pil_image.tobytes(), colorfmt="rgb", bufferfmt="ubyte"
             )
-            self.ids.art.texture = kivy_texture
-            self.ids.art.reload()
-            self.sound = SoundLoader().load(str(file))
+        self.ids.art.texture = kivy_texture
+        self.sound = SoundLoader().load(str(file))
+        self.sound.bind(on_stop=self.player_stop)
+
+    def refresh(self, name):
+        self.ids.playlist.text = name
+        self.choose_music(0)
+
+    def player_stop(self, instance):
+        if self.play_next:
+            self.choose_music(self.current_music + 1)
+            self.sound.play()
 
     def play_pause_music(self):
-        if self.sound and self.sound.state == 'stop':
+        if self.sound and self.sound.state == "stop":
+            self.play_next = True
             self.sound.play()
-        elif self.sound and self.sound.state == 'play':
+        elif self.sound and self.sound.state == "play":
+            self.play_next = False
             self.sound.stop()
 
     def choose_playlist_dialog(self):
