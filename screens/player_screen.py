@@ -40,6 +40,9 @@ class PlayerScreen(MDScreen):
         self.play_next = False
 
     def choose_music(self, number: int = 0):
+        if self.sound:
+            self.sound.stop()
+            self.sound.unload()
         if not self.current_playlist or len(self.current_playlist) == 0:
             return None
         if number < 0:
@@ -48,9 +51,6 @@ class PlayerScreen(MDScreen):
             self.current_music = 0
         else:
             self.current_music = number
-        if self.sound:
-            self.sound.stop()
-            self.sound.unload()
         file = self.current_playlist[self.current_music]
         data = get_metadata(file)
         track = data["title"]

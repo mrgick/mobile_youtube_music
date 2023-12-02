@@ -1,23 +1,14 @@
-<CreatePlaylistDialog>
+<ConfirmationDialog>
     orientation: "vertical"
     spacing:"20sp"
     size_hint_y: None
-    height: "120sp"
-    MDTextField:
-        id: name
-        hint_text: "Enter name"
+    height: "100sp"
+    MDLabel:
+        id: message
         text: ""
+        pos_hint: {"center_x": .5, "center_y": .5}
 
-    MDFillRoundFlatIconButton:
-        id: btn
-        icon: "plus"
-        text: "Create"
-        disabled: name.text == ""
-        on_release: root.create_playlist(name.text)
-
-
-
-<PlaylistsScreen>:
+<PlaylistDetailScreen>:
     MDBoxLayout:
         orientation: "vertical"
         MDTopAppBar
@@ -26,9 +17,9 @@
             padding: "20sp"
             spacing: "10sp"
             MDFillRoundFlatIconButton:
-                icon: "plus"
-                text: "CREATE NEW"
-                on_release: root.add_playlist()
+                icon: 'delete-outline'
+                text: "DELETE PLAYLIST"
+                on_release: root.delete_playlist_dialog()
             MDSeparator:
                 orientation:'horizontal'
                 height: "2sp"
