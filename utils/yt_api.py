@@ -1,9 +1,10 @@
-from ytmusicapi import YTMusic
+import io
 from pathlib import Path
-import yt_dlp
+
 import eyed3
 import requests
-import io
+import yt_dlp
+from ytmusicapi import YTMusic
 
 yt_searcher = YTMusic()
 
@@ -15,7 +16,7 @@ def search_music(search_text: str) -> list[dict]:
 def download_music(song: dict, dir_path: Path, progress_hook):
     options = {
         "format": "bestaudio/best",
-        "outtmpl": str(dir_path / (song['title'] + ".%(ext)s")),
+        "outtmpl": str(dir_path / (song["title"] + ".%(ext)s")),
         "progress_hooks": [progress_hook],
         "postprocessors": [
             {
@@ -44,16 +45,17 @@ def add_metadata(song: dict, dir_path: Path):
 
     audiofile.tag.save()
 
+
 def get_metadata(path: Path) -> dict:
     audiofile = eyed3.load(path)
     info = {
-        'title' : audiofile.tag.title,
-        'artist' : audiofile.tag.artist,
-        'album' : audiofile.tag.album,
-        'image' : None
+        "title": audiofile.tag.title,
+        "artist": audiofile.tag.artist,
+        "album": audiofile.tag.album,
+        "image": None,
     }
-    if not info['title']:
-        info['title'] = path.stem
+    if not info["title"]:
+        info["title"] = path.stem
     if len(audiofile.tag.images) > 0:
-        info['image'] = io.BytesIO(audiofile.tag.images[0].image_data)
+        info["image"] = io.BytesIO(audiofile.tag.images[0].image_data)
     return info

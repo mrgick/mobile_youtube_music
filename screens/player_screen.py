@@ -1,14 +1,16 @@
-from kivymd.uix.screen import MDScreen
+from kivy.core.audio import SoundLoader
+from kivy.graphics.texture import Texture
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.list import MDList, OneLineListItem
-from .playlists_screen import get_playlists
-from utils.yt_api import get_metadata
-from kivy.graphics.texture import Texture
+from kivymd.uix.screen import MDScreen
 from PIL import Image, ImageFilter
-from kivy.core.audio import SoundLoader
+
+from utils.yt_api import get_metadata
+
+from .playlists_screen import get_playlists
 
 
 class ChoosePlaylistDialog(MDBoxLayout):

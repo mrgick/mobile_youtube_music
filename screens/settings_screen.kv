@@ -1,0 +1,25 @@
+<SettingsScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        MDTopAppBar
+
+        MDGridLayout:
+            cols: 2
+            padding: ["20sp", "20sp", "40sp", "20sp"]
+            row_force_default:True
+            row_default_height:"60sp"
+
+            MDLabel:
+                text: "Theme"
+
+            MDSwitch:
+                active: app.theme_cls.theme_style == "Dark"
+                on_active: on_release: app.switch_theme(self.active)
+            
+            MDLabel:
+                text: "Select path"
+                
+            MDIconButton:
+                icon: 'folder'
+                on_release: root.open_file_manager()
+                

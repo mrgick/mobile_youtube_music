@@ -1,15 +1,18 @@
-from kivymd.app import MDApp
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.screen import MDScreen
-from kivymd.uix.list import MDList, OneLineListItem
-from kivymd.uix.button import MDFlatButton
-from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.textfield import MDTextField
 from pathlib import Path
+
+from kivymd.app import MDApp
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.button import MDFlatButton
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.list import MDList, OneLineListItem
+from kivymd.uix.screen import MDScreen
+from kivymd.uix.textfield import MDTextField
+
 
 def get_playlists() -> list[Path]:
     app = MDApp.get_running_app()
     return [x for x in app.music_path.iterdir() if x.is_dir()]
+
 
 class CreatePlaylistDialog(MDBoxLayout):
     def create_playlist(self, playlist_name: str):
@@ -21,6 +24,7 @@ class CreatePlaylistDialog(MDBoxLayout):
         tf.disabled = True
         btn: MDFlatButton = self.ids.btn
         btn.disabled = True
+
 
 class PlaylistsScreen(MDScreen):
     def __init__(self, *args, **kwargs):
@@ -41,12 +45,12 @@ class PlaylistsScreen(MDScreen):
     def open_playlist(self, item):
         app = MDApp.get_running_app()
         app.playlist_path = item.path
-        app.switch_screen('playlist_detail_screen')
+        app.switch_screen("playlist_detail_screen")
 
     def add_playlist(self):
         app = MDApp.get_running_app()
         app.dialog = MDDialog(
-            title='Create new playlist',
+            title="Create new playlist",
             type="custom",
             content_cls=CreatePlaylistDialog(),
             buttons=[
