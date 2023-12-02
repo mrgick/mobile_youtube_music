@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from kivy.core.window import Window
+# from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.screenmanager import NoTransition, ScreenManager
 from kivy.utils import platform
@@ -12,7 +12,7 @@ from screens.playlists_screen import PlaylistsScreen
 from screens.search_screen import SearchScreen
 from screens.settings_screen import SettingsScreen
 
-Window.size = (400, 800)
+# Window.size = (400, 800)
 
 
 class YoutubeMusicApp(MDApp):

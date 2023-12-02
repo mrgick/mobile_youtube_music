@@ -6,6 +6,9 @@ music/
 # C extensions
 *.so
 
+.buildozer/
+bin/
+
 # Distribution / packaging
 .Python
 build/
