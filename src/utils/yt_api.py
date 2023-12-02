@@ -61,7 +61,7 @@ def get_metadata(file_path: Path) -> dict:
 
     if not info["title"]:
         info["title"] = file_path.stem
-    print(audiofile)
+    #print(audiofile)
     if "APIC:" in audiofile:
         image_data = audiofile.get("APIC:").data
         info["image"] = io.BytesIO(image_data)

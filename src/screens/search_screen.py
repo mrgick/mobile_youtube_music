@@ -70,7 +70,7 @@ class SongDialog(MDBoxLayout):
         self.download_complete = True
 
     def update_status(self, x):
-        if x and x.get("speed") and x.get("_percent_str"):
+        if x and x.get("speed") and x.get("_percent_str") and 'm' in x["_percent_str"]:
             self.download_text = f"Downloading: {x['speed']/1048576:.2f}Mb, {x['_percent_str'].split('m')[1].split('%')[0]}%"
 
 

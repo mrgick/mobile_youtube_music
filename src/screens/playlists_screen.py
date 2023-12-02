@@ -27,10 +27,6 @@ class CreatePlaylistDialog(MDBoxLayout):
 
 
 class PlaylistsScreen(MDScreen):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.refresh_list()
-
     def on_pre_enter(self, *args):
         self.refresh_list()
 

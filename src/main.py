@@ -19,8 +19,8 @@ class YoutubeMusicApp(MDApp):
     dialog = None
 
     def build(self):
+        self.music_path = None
         self.playlist_path = None
-        self.set_music_path(Path("music"))
         screens = Path("screens")
         Builder.load_file("main.kv")
         Builder.load_file(str(screens / "search_screen.kv"))
@@ -39,14 +39,21 @@ class YoutubeMusicApp(MDApp):
         self.sm = sm
         return sm
 
+    def on_start(self):
+        self.set_music_path(Path("music"))
+
     def set_music_path(self, path):
-        self.music_path = Path("music")
         if platform == "android":
-            _path = Path("/storage/emulated/0/")
-            if _path.exists():
-                _path = _path / "YTMusic"
-                _path.mkdir(exist_ok=True)
-                self.music_path = _path
+            from android.permissions import request_permissions, check_permission, Permission
+            request_permissions([Permission.INTERNET, Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+            from android.storage import app_storage_path # https://github.com/Android-for-Python/Android-for-Python-Users/blob/main/README.md#app-storage-directory
+            _path = Path(app_storage_path())
+            _path = _path / "cache"
+            _path.mkdir(exist_ok=True)
+            self.music_path = _path
+        else:
+            self.music_path = Path("music")
+            self.music_path.mkdir(exist_ok=True)
 
     def switch_screen(self, screen_name: str):
         self.sm.current = screen_name
