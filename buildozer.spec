@@ -42,7 +42,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = kivy==master, https://github.com/kivymd/KivyMD/archive/master.zip, ytmusicapi==1.3.2, yt-dlp==2023.11.16, requests==2.31.0, pillow==10.1.0, materialyoucolor==1.2.0, mutagen==1.47.0
+requirements = kivy==master, https://github.com/kivymd/KivyMD/archive/master.zip, ytmusicapi==1.3.2, requests==2.31.0, pillow==10.1.0, materialyoucolor==1.2.0, mutagen==1.47.0
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes

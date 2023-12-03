@@ -2,33 +2,30 @@ import io
 from pathlib import Path
 
 import requests
-import yt_dlp
+#import yt_dlp
 from mutagen.id3 import APIC, ID3, TALB, TIT2, TPE1
 from ytmusicapi import YTMusic
-
-yt_searcher = YTMusic()
+import requests
 
 
 def search_music(search_text: str) -> list[dict]:
+    yt_searcher = YTMusic()
     return yt_searcher.search(search_text, filter="songs")
 
 
 def download_music(song: dict, dir_path: Path, progress_hook):
-    options = {
-        "format": "bestaudio/best",
-        "outtmpl": str(dir_path / (song["title"] + ".%(ext)s")),
-        "progress_hooks": [progress_hook],
-        "postprocessors": [
-            {
-                "key": "FFmpegExtractAudio",
-                "preferredcodec": "mp3",
-                "preferredquality": "0",
-            }
-        ],
-    }
+    # options = {
+    #     "format": "bestaudio/best",
+    #     "outtmpl": str(dir_path / (song["title"] + ".%(ext)s")),
+    #     "progress_hooks": [progress_hook],
+    # }
 
-    with yt_dlp.YoutubeDL(options) as ydl:
-        ydl.download([f"https://www.youtube.com/watch?v={song['videoId']}"])
+    # with yt_dlp.YoutubeDL(options) as ydl:
+    #     ydl.download([f"https://www.youtube.com/watch?v={song['videoId']}"])
+    response = requests.post("https://yt-music.onrender.com/api/download", json={"url":f"https://www.youtube.com/watch?v={song['videoId']}"}, timeout=9999)
+    print(response.status_code)
+    with open(dir_path / f"{song['title']}.mp3", "wb") as f:
+        f.write(response.content)
 
 
 def add_metadata(song: dict, dir_path: Path):

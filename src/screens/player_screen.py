@@ -36,8 +36,8 @@ class ChoosePlaylistDialog(MDBoxLayout):
 class PlayerScreen(MDScreen):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.current_playlist = None
-        self.current_music = None
+        self.current_playlist = []
+        self.current_music = 0
         self.sound = None
         self.play_next = False
 
@@ -70,7 +70,7 @@ class PlayerScreen(MDScreen):
                 .rotate(180)
             )
             kivy_texture = Texture.create(
-                size=(pil_image.width, pil_image.height), colorfmt="rgba"
+                size=(pil_image.width, pil_image.height), colorfmt="rgb"
             )
             kivy_texture.blit_buffer(
                 pil_image.tobytes(), colorfmt="rgb", bufferfmt="ubyte"
