@@ -42,7 +42,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = pyjnius, jnius, kivy==master, https://github.com/kivymd/KivyMD/archive/master.zip, ytmusicapi==1.3.2, yt-dlp==2023.11.16, requests==2.31.0, pillow==10.1.0, materialyoucolor==1.2.0, mutagen==1.47.0
+requirements = kivy==master, https://github.com/kivymd/KivyMD/archive/master.zip, ytmusicapi==1.3.2, yt-dlp==2023.11.16, requests==2.31.0, pillow==10.1.0, materialyoucolor==1.2.0, mutagen==1.47.0
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -109,22 +109,22 @@ android.permissions = android.permission.INTERNET, android.permission.WRITE_EXTE
 #android.features = android.hardware.usb.host
 
 # (int) Target Android API, should be as high as possible.
-android.api = 32
+#android.api = 31
 
 # (int) Minimum API your APK / AAB will support.
-android.minapi = 26
+#android.minapi = 21
 
 # (int) Android SDK version to use
 #android.sdk = 20
 
 # (str) Android NDK version to use
-android.ndk = 25c
+#android.ndk = 23b
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
 #android.ndk_api = 21
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
-#android.ndk_path = /opt/android-sdk/ndk/25.2.9519653
+#android.ndk_path =
 
 # (str) Android SDK directory (if empty, it will be automatically downloaded.)
 #android.sdk_path =
@@ -209,12 +209,12 @@ android.accept_sdk_license = True
 #android.add_resources =
 
 # (list) Gradle dependencies to add
-android.gradle_dependencies = com.arqies:ffmpeg-kit-python:6.0-2.LTS@aar, com.arthenica:smart-exception-common:0.2.1@jar, com.arthenica:smart-exception-java:0.2.1@jar 
+#android.gradle_dependencies =
 
 # (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
 # contains an 'androidx' package, or any package from Kotlin source.
 # android.enable_androidx requires android.api >= 28
-android.enable_androidx = True
+#android.enable_androidx = True
 
 # (list) add java compile options
 # this can for example be necessary when importing certain java libraries using the 'android.gradle_dependencies' option
@@ -224,7 +224,7 @@ android.enable_androidx = True
 # (list) Gradle repositories to add {can be necessary for some android.gradle_dependencies}
 # please enclose in double quotes 
 # e.g. android.gradle_repositories = "maven { url 'https://kotlin.bintray.com/ktor' }"
-android.add_gradle_repositories = maven {url 'https://Arqies-Repositories.github.io/Gradle-FFmpeg-Kit-Python/'}
+#android.add_gradle_repositories =
 
 # (list) packaging options to add 
 # see https://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.PackagingOptions.html
