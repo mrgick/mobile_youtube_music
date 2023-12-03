@@ -1,8 +1,8 @@
 # YT music app
-Just a proof of concept that can create an player app with kivy.
+Just a proof of concept that you can create a player app using kivy.
 
 
-Unfortunately I had to bring up an additional [api](https://github.com/mrgick/yt-dl-fast-api) to download mp3 files, as I couldn't get ffmpeg to work to convert from .webm to .mp3. But, you can try to build ffmpeg-kit with lame https://github.com/ArqiesAr/FFmpeg-Kit-Python
+> Unfortunately I had to bring up an additional [api](https://github.com/mrgick/yt-dl-fast-api) to download mp3 files, as I couldn't get ffmpeg to work to convert from .webm to .mp3. But, you can try to build ffmpeg-kit with lame https://github.com/ArqiesAr/FFmpeg-Kit-Python
 
 
 ## Build android app
