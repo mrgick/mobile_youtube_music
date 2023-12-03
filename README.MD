@@ -11,6 +11,7 @@ Unfortunately I had to bring up an additional [api](https://github.com/mrgick/yt
 git clone https://github.com/kivy/buildozer.git 
 cd buildozer
 docker build --tag=buildozer .
+```
 
 2. Build app
 ```bash
