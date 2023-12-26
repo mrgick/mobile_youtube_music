@@ -17,3 +17,14 @@ docker build --tag=buildozer .
 ```bash
 docker run --volume "$(pwd)":/home/user/hostcwd --volume "$HOME"/.buildozer:/home/user/.buildozer  buildozer android debug
 ```
+## Screenshots
+<details>
+<summary>Screenshots of an app</summary>
+
+![Search screen](screenshots/image1.png?raw=true "Search screen")
+![Settings screen](screenshots/image4.png?raw=true "Settings screen")
+![Playlists screen](screenshots/image3.png?raw=true "Playlists screen")
+![Playlist detail screen](screenshots/image4.png?raw=true "Playlist detail screen")
+![Player screen](screenshots/image5.png?raw=true "Player screen")
+
+</details>
